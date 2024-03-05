@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: debian-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
       - name: Display associated web page
         run: |
           sleep 10
-          curl http://localhost:80
+          curl http://localhost:8080
 
       - name: Stop Docker Compose
         run: docker-compose down
