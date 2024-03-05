@@ -1,0 +1,24 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/app
+      - ./nginx-config/:/etc/nginx/conf.d/
+  php:
+    image: php:fpm-alpine
+    volumes:
+      - ./app:/app
+    command: ["sh", "-c", "docker-php-ext-install pdo pdo_mysql && php-fpm"]
+  mariadb_db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: database
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+       - "3307:3306"
+    volumes:
+      - ./InitDB.sql:/docker-entrypoint-initdb.d/InitDB.sql
