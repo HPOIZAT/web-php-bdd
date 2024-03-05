@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: debian-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Start Docker Compose
+        run: docker-compose up -d
+
+      - name: Display associated web page
+        run: |
+          sleep 10
+          curl http://localhost:80
+
+      - name: Stop Docker Compose
+        run: docker-compose down
